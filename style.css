@@ -600,3 +600,115 @@ a {
     .cta-group { flex-direction: column; }
     .card-icon { font-size: 2rem; }
 }
+
+/* --- SCROLLING MARQUEE --- */
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    background: rgba(16, 20, 36, 0.9);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 0;
+    white-space: nowrap;
+    position: relative;
+    z-index: 10;
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: marquee 30s linear infinite;
+    color: var(--accent-purple);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.marquee-content span {
+    margin: 0 3rem;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* --- HARDWARE IMAGE --- */
+.hardware-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,240,255,0.15);
+    transition: transform 0.5s ease;
+    border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.hardware-image:hover img {
+    transform: scale(1.02);
+    box-shadow: 0 10px 40px rgba(0,240,255,0.3);
+}
+
+/* --- STATS SECTION --- */
+.stats-section {
+    padding: 2rem 0;
+}
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, rgba(16, 20, 36, 0.8), rgba(10, 13, 24, 1));
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.stat-item h3 {
+    font-size: 3.5rem;
+    color: var(--accent-glow);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+.stat-item p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+/* --- CARD HOVER GLOW --- */
+.card {
+    position: relative;
+    overflow: hidden;
+    background: var(--glass-bg);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+        rgba(124, 58, 237, 0.15),
+        transparent 40%
+    );
+    z-index: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card > * {
+    position: relative;
+    z-index: 1;
+}

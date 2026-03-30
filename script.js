@@ -114,4 +114,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animate();
 
+    /* --- Stats Counter --- */
+    const stats = document.querySelectorAll('.stat-num');
+    const statsObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const endVal = parseFloat(target.getAttribute('data-target'));
+                const duration = 2000;
+                let startTime = null;
+                const suffix = target.getAttribute('data-suffix') || '';
+
+                function updateCounter(currentTime) {
+                    if (!startTime) startTime = currentTime;
+                    const progress = Math.min((currentTime - startTime) / duration, 1);
+                    // easeOutQuart
+                    const ease = 1 - Math.pow(1 - progress, 4);
+                    const currentVal = (ease * endVal).toFixed(endVal % 1 === 0 ? 0 : 1);
+                    target.innerText = currentVal + suffix;
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        target.innerText = endVal + suffix;
+                    }
+                }
+                requestAnimationFrame(updateCounter);
+                observer.unobserve(target);
+            }
+        });
+    }, observerOptions);
+
+    stats.forEach(stat => statsObserver.observe(stat));
+
+    /* --- Card Hover Glow Effect --- */
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+
 });
